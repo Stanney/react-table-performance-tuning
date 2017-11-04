@@ -75,7 +75,7 @@ class TableBody extends PureComponent {
         const fullHeight = scrollTop + 400;
         const number = Math.ceil(fullHeight / 37);
         const filterRecords = [
-            ...records.slice(number - 11, number + 10)
+            ...records.slice(number - 11, number)
         ];
         return (
             <div
@@ -84,6 +84,7 @@ class TableBody extends PureComponent {
                     this.body = node;
                 }}
             >
+                <div style={{ height: (number - 12 > 0 ? number - 12 : 0) * 37 }} />
                 {
                     filterRecords.map((row, index) => {
                         const key = this.getRowKey(row, index);
@@ -110,7 +111,7 @@ class TableBody extends PureComponent {
                         { emptyText() }
                     </div>
                 }
-                <div style={{ height: 800 }} />
+                <div style={{ height: (5000 - number) * 37 }} />
             </div>
         );
     }
