@@ -34,13 +34,13 @@ class TableBody extends PureComponent {
 
     componentDidMount() {
         const { onMouseOver, onTouchStart, onScroll } = this.props;
-        this.body.addEventListener('scroll', onScroll);
+        document.getElementById('list').addEventListener('scroll', onScroll);
         this.body.addEventListener('mouseover', onMouseOver);
         this.body.addEventListener('touchstart', onTouchStart);
     }
     componentWillUnmount() {
         const { onMouseOver, onTouchStart, onScroll } = this.props;
-        this.body.removeEventListener('scroll', onScroll);
+        document.getElementById('list').removeEventListener('scroll', onScroll);
         this.body.removeEventListener('mouseover', onMouseOver);
         this.body.removeEventListener('touchstart', onTouchStart);
     }
@@ -68,9 +68,15 @@ class TableBody extends PureComponent {
             onRowHover,
             onRowClick,
             records,
-            rowClassName
+            rowClassName,
+            scrollTop
         } = this.props;
         const noData = (!records || records.length === 0);
+        const fullHeight = scrollTop + 400;
+        const number = Math.ceil(fullHeight / 37);
+        const filterRecords = [
+            ...records.slice(number - 11, number + 10)
+        ];
         return (
             <div
                 className={styles.tbody}
@@ -79,7 +85,7 @@ class TableBody extends PureComponent {
                 }}
             >
                 {
-                    records.map((row, index) => {
+                    filterRecords.map((row, index) => {
                         const key = this.getRowKey(row, index);
                         return (
                             <TableRow
@@ -104,6 +110,7 @@ class TableBody extends PureComponent {
                         { emptyText() }
                     </div>
                 }
+                <div style={{ height: 800 }} />
             </div>
         );
     }

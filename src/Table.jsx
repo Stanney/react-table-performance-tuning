@@ -59,15 +59,18 @@ class Table extends PureComponent {
             }
         },
         handleBodyScroll: (e) => {
-            if (e.target !== this.scrollTarget) {
-                return;
-            }
+            console.log('handleBodyScroll', e.target.scrollTop);
+            // if (e.target !== this.scrollTarget) {
+            //     return;
+            // }
             // scrollTop is for scrolling main table and fixed table at the same time.
-            if (this.isAnyColumnsLeftFixed()) {
-                this.setState({
-                    scrollTop: e.target.scrollTop
-                });
-            }
+            //if (this.isAnyColumnsLeftFixed()) {
+            setTimeout(
+              this.setState({
+                  scrollTop: e.target.scrollTop
+              })
+            , 1000);
+            //}
         },
         handleRowHover: (isHover, key) => {
             const { hoverable } = this.props;
@@ -382,6 +385,7 @@ class Table extends PureComponent {
                 }
                 rowsHeight[i] = cellHeight;
             }
+
             return rowsHeight;
         },
         setMainTableBodyCellWidth: (cellsWidth) => {
@@ -542,6 +546,7 @@ class Table extends PureComponent {
             rowClassName,
             rowKey
         } = this.props;
+        console.log('renderTable');
         return (
             <TableTemplate
                 columns={columns}
@@ -676,7 +681,7 @@ class Table extends PureComponent {
         delete props.onRowClick;
         delete props.emptyText;
         delete props.showHeader;
-
+        console.log('render', this.state.scrollTop);
         return (
             <div
                 {...props}
@@ -700,7 +705,6 @@ class Table extends PureComponent {
                 { title && this.renderTitle() }
                 <div className={styles.tableArea}>
                     { this.renderTable() }
-                    { this.isAnyColumnsLeftFixed() && this.renderFixedLeftTable() }
                     { loading && this.renderLoader() }
                 </div>
                 { footer && this.renderFooter() }

@@ -115,6 +115,7 @@ class TableTemplate extends PureComponent {
         } = this.props;
         return (
             <div
+                id="list"
                 ref={node => {
                     if (node) {
                         this.table = node;

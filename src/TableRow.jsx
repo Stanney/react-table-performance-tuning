@@ -15,7 +15,8 @@ class TableRow extends PureComponent {
         onHover: PropTypes.func,
         onRowClick: PropTypes.func,
         record: PropTypes.object,
-        rowClassName: PropTypes.func
+        rowClassName: PropTypes.func,
+        show: PropTypes.bool
     };
 
     static defaultProps = {
@@ -84,7 +85,7 @@ class TableRow extends PureComponent {
                 className={classNames(
                     styles.tr,
                     className,
-                    { [styles['tr-hover']]: (currentHoverKey === hoverKey) }
+                    { [styles['tr-hover']]: (currentHoverKey === hoverKey) },
                 )}
                 ref={node => {
                     this.row = node;
@@ -96,7 +97,7 @@ class TableRow extends PureComponent {
                         const index = i++;
                         return (
                             <TableCell
-                                key={`${hoverKey}_${index}`}
+                                key={index}
                                 column={column}
                                 record={record}
                             />
