@@ -26981,6 +26981,11 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var TOTAL_SOURCE_NUM = 5000;
+var SCROLL_TABLE_HEIGHT = 400;
+var ITEMNUM_IN_SCROLL_TABLE = 11;
+var ITEM_HEIGHT = 37;
+
 var TableBody = (_temp = _class = function (_PureComponent) {
     _inherits(TableBody, _PureComponent);
 
@@ -27048,9 +27053,12 @@ var TableBody = (_temp = _class = function (_PureComponent) {
                 scrollTop = _props3.scrollTop;
 
             var noData = !records || records.length === 0;
-            var fullHeight = scrollTop + 400;
-            var number = Math.ceil(fullHeight / 37);
-            var filterRecords = [].concat(_toConsumableArray(records.slice(number - 11, number)));
+            var fullHeight = scrollTop + SCROLL_TABLE_HEIGHT;
+            var number = Math.ceil(fullHeight / ITEM_HEIGHT);
+            var startNum = number - ITEMNUM_IN_SCROLL_TABLE;
+            var topHeight = startNum - 1 > 0 ? (startNum - 1) * ITEM_HEIGHT : 0;
+            var endHeight = (TOTAL_SOURCE_NUM - number) * ITEM_HEIGHT;
+            var filterRecords = [].concat(_toConsumableArray(records.slice(number - ITEMNUM_IN_SCROLL_TABLE, number)));
             return _react2.default.createElement(
                 'div',
                 {
@@ -27059,7 +27067,7 @@ var TableBody = (_temp = _class = function (_PureComponent) {
                         _this2.body = node;
                     }
                 },
-                _react2.default.createElement('div', { style: { height: (number - 12 > 0 ? number - 12 : 0) * 37 } }),
+                _react2.default.createElement('div', { style: { height: topHeight } }),
                 filterRecords.map(function (row, index) {
                     var key = _this2.getRowKey(row, index);
                     return _react2.default.createElement(_TableRow2.default, {
@@ -27081,7 +27089,7 @@ var TableBody = (_temp = _class = function (_PureComponent) {
                     { className: _index2.default.tablePlaceholder },
                     emptyText()
                 ),
-                _react2.default.createElement('div', { style: { height: (5000 - number) * 37 } })
+                _react2.default.createElement('div', { style: { height: endHeight } })
             );
         }
     }]);
@@ -27871,4 +27879,4 @@ exports.default = uniqueid;
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.js.map?940caf42784ab39fcbd7
+//# sourceMappingURL=bundle.js.map?25b3d34da534bfa90082
