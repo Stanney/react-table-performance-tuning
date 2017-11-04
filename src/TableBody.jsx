@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import styles from './index.styl';
 import TableRow from './TableRow';
 
+const TOTAL_SOURCE_NUM = 5000;
+const SCROLL_TABLE_HEIGHT = 400;
+const ITEMNUM_IN_SCROLL_TABLE = 11;
+const ITEM_HEIGHT = 37;
+
 class TableBody extends PureComponent {
     static propTypes = {
         columns: PropTypes.array,
@@ -72,10 +77,13 @@ class TableBody extends PureComponent {
             scrollTop
         } = this.props;
         const noData = (!records || records.length === 0);
-        const fullHeight = scrollTop + 400;
-        const number = Math.ceil(fullHeight / 37);
+        const fullHeight = scrollTop + SCROLL_TABLE_HEIGHT;
+        const number = Math.ceil(fullHeight / ITEM_HEIGHT);
+        const startNum = number - ITEMNUM_IN_SCROLL_TABLE;
+        const topHeight = (startNum - 1) > 0 ? (startNum - 1) * ITEM_HEIGHT : 0;
+        const endHeight = (TOTAL_SOURCE_NUM - number) * ITEM_HEIGHT;
         const filterRecords = [
-            ...records.slice(number - 11, number)
+            ...records.slice(number - ITEMNUM_IN_SCROLL_TABLE, number)
         ];
         return (
             <div
@@ -84,7 +92,7 @@ class TableBody extends PureComponent {
                     this.body = node;
                 }}
             >
-                <div style={{ height: (number - 12 > 0 ? number - 12 : 0) * 37 }} />
+                <div style={{ height: topHeight }} />
                 {
                     filterRecords.map((row, index) => {
                         const key = this.getRowKey(row, index);
@@ -111,7 +119,7 @@ class TableBody extends PureComponent {
                         { emptyText() }
                     </div>
                 }
-                <div style={{ height: (5000 - number) * 37 }} />
+                <div style={{ height: endHeight }} />
             </div>
         );
     }
