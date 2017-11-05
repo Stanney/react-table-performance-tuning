@@ -59,18 +59,9 @@ class Table extends PureComponent {
             }
         },
         handleBodyScroll: (e) => {
-            console.log('handleBodyScroll', e.target.scrollTop);
-            // if (e.target !== this.scrollTarget) {
-            //     return;
-            // }
-            // scrollTop is for scrolling main table and fixed table at the same time.
-            //if (this.isAnyColumnsLeftFixed()) {
-            setTimeout(
-              this.setState({
-                  scrollTop: e.target.scrollTop
-              })
-            , 1000);
-            //}
+            this.setState({
+                scrollTop: e.target.scrollTop
+            });
         },
         handleRowHover: (isHover, key) => {
             const { hoverable } = this.props;
@@ -484,7 +475,8 @@ class Table extends PureComponent {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.maxHeight !== this.props.maxHeight ||
-            prevProps.data !== this.props.data) {
+            prevProps.data !== this.props.data ||
+            prevState.scrollTop !== this.state.scrollTop) {
             this.actions.setTableSize();
         }
     }
@@ -546,7 +538,7 @@ class Table extends PureComponent {
             rowClassName,
             rowKey
         } = this.props;
-        console.log('renderTable');
+
         return (
             <TableTemplate
                 columns={columns}
@@ -681,7 +673,7 @@ class Table extends PureComponent {
         delete props.onRowClick;
         delete props.emptyText;
         delete props.showHeader;
-        console.log('render', this.state.scrollTop);
+
         return (
             <div
                 {...props}
