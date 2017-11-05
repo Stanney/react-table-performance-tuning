@@ -26233,16 +26233,9 @@ var Table = (_temp2 = _class = function (_PureComponent) {
                 }
             },
             handleBodyScroll: function handleBodyScroll(e) {
-                console.log('handleBodyScroll', e.target.scrollTop);
-                // if (e.target !== this.scrollTarget) {
-                //     return;
-                // }
-                // scrollTop is for scrolling main table and fixed table at the same time.
-                //if (this.isAnyColumnsLeftFixed()) {
-                setTimeout(_this.setState({
+                _this.setState({
                     scrollTop: e.target.scrollTop
-                }), 1000);
-                //}
+                });
             },
             handleRowHover: function handleRowHover(isHover, key) {
                 var hoverable = _this.props.hoverable;
@@ -26655,7 +26648,7 @@ var Table = (_temp2 = _class = function (_PureComponent) {
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps, prevState) {
-            if (prevProps.maxHeight !== this.props.maxHeight || prevProps.data !== this.props.data) {
+            if (prevProps.maxHeight !== this.props.maxHeight || prevProps.data !== this.props.data || prevState.scrollTop !== this.state.scrollTop) {
                 this.actions.setTableSize();
             }
         }
@@ -26731,7 +26724,7 @@ var Table = (_temp2 = _class = function (_PureComponent) {
                 rowClassName = _props.rowClassName,
                 rowKey = _props.rowKey;
 
-            console.log('renderTable');
+
             return _react2.default.createElement(_TableTemplate2.default, {
                 columns: columns,
                 currentHoverKey: currentHoverKey,
@@ -26882,7 +26875,7 @@ var Table = (_temp2 = _class = function (_PureComponent) {
             delete props.onRowClick;
             delete props.emptyText;
             delete props.showHeader;
-            console.log('render', this.state.scrollTop);
+
             return _react2.default.createElement(
                 'div',
                 _extends({}, props, {
@@ -27879,4 +27872,4 @@ exports.default = uniqueid;
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.js.map?25b3d34da534bfa90082
+//# sourceMappingURL=bundle.js.map?fdf61afa50879bc0b613
